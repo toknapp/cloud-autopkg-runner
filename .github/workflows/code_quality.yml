@@ -43,4 +43,4 @@ jobs:
         with:
           version: "latest"
           enable-cache: true
-      - run: uv run pyright .
+      - run: uvx pyright .
