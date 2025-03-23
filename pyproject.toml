@@ -11,7 +11,7 @@ dev = [
 
 [project]
 name = "cloud-autopkg-runner"
-version = "0.1.0"
+version = "0.1.1"
 description = "Asynchronous tools for managing AutoPkg recipes in cloud environments."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -77,3 +77,9 @@ select = ["D", "E4", "E7", "E9", "F", "W"]
 
 [tool.ruff.lint.pydocstyle]
 convention = "google"
+
+[[tool.uv.index]]
+name = "testpypi"
+url = "https://test.pypi.org/simple/"
+publish-url = "https://test.pypi.org/legacy/"
+explicit = true
