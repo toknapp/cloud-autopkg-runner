@@ -1,0 +1,33 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - ^v(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$
+
+jobs:
+  TestPyPi:
+    name: Publish to TestPyPI
+    runs-on: ubuntu-latest
+    environment:
+      name: TestPyPi
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv build
+      - run: uv publish --trusted-publishing always
+
+  # PyPi:
+  #   name: Publish to PyPI
+  #   runs-on: ubuntu-latest
+  #   environment:
+  #     name: PyPi
+  #   permissions:
+  #     id-token: write
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: astral-sh/setup-uv@v5
+  #     - run: uv build
+  #     - run: uv publish --trusted-publishing always
