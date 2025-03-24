@@ -18,8 +18,6 @@ import sys
 from pathlib import Path
 from typing import Optional
 
-from cloud_autopkg_runner.__main__ import main as main
-
 # Create a logger instance
 logger: logging.Logger = logging.getLogger(__name__)
 
