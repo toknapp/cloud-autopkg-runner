@@ -26,4 +26,4 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
-      - run: uv run --with cloud-autopkg-runner --no-project -- python -c "import cloud-autopkg-runner"
+      - run: uv run --with cloud-autopkg-runner --index-url https://test.pypi.org/simple/ --no-project -- python -c "import cloud_autopkg_runner"
