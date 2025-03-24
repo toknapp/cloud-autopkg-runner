@@ -29,6 +29,7 @@ jobs:
 
   publish-to-testpypi:
     name: Publish to TestPyPI
+    needs: [update-version-minor]
     runs-on: ubuntu-latest
     environment:
       name: TestPyPi
@@ -53,15 +54,6 @@ jobs:
       - name: Install
         run: uv run --with cloud-autopkg-runner --extra-index-url https://test.pypi.org/simple/ --index-strategy unsafe-best-match --no-project -- python -c "import cloud_autopkg_runner"
 
-  update-version-dev:
-    name: Bump Version
-    needs: [install-library-from-testpypi]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v5
-      - name: Bump Version
-        run: uvx hatch version dev
 
 
   update-version-release:
