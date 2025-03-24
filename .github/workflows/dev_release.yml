@@ -23,6 +23,7 @@ jobs:
 
   InstallLibrary:
     name: Install from TestPyPI
+    needs: [TestPyPi]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
