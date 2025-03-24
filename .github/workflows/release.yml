@@ -3,11 +3,30 @@ name: Release
 on:
   push:
     branches:
-      - '*'
-    tags:
-      - v*
+      - dev
+      - main
 
 jobs:
+  update-version-minor:
+    name: Bump Version and Commit
+    if: github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: Bump Version
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          VERSION=$(uvx hatch version)
+          hatch version minor
+          NEW_VERSION=$(uvx hatch version)
+          git add src/cloud_autopkg_runner/__about__.py
+          git commit -m "Bump version: ${VERSION} → ${NEW_VERSION}"
+          git tag ${VERSION}
+          git push
+          git push --tags
+
   publish-to-testpypi:
     name: Publish to TestPyPI
     runs-on: ubuntu-latest
@@ -34,9 +53,41 @@ jobs:
       - name: Install
         run: uv run --with cloud-autopkg-runner --extra-index-url https://test.pypi.org/simple/ --index-strategy unsafe-best-match --no-project -- python -c "import cloud_autopkg_runner"
 
+  update-version-dev:
+    name: Bump Version
+    needs: [install-library-from-testpypi]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: Bump Version
+        run: uvx hatch version dev
+
+
+  update-version-release:
+    name: Bump Version and Commit
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: Bump Version
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          VERSION=$(uvx hatch version)
+          hatch version release
+          NEW_VERSION=$(uvx hatch version)
+          git add src/cloud_autopkg_runner/__about__.py
+          git commit -m "Bump version: ${VERSION} → ${NEW_VERSION}"
+          git tag ${VERSION}
+          git push
+          git push --tags
+
   publish-to-pypi:
     name: Publish to PyPI
-    if: github.ref == 'refs/heads/main' && startsWith(github.ref, 'refs/tags/v')
+    if: github.ref == 'refs/heads/main'
+    needs: [update-version-release]
     runs-on: ubuntu-latest
     environment:
       name: PyPi

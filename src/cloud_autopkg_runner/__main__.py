@@ -217,6 +217,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-    # TODO: Split repo into two -- package and example
-    # TODO: Test package deployment to pypi dev
-    # TODO: Test install and use of package
