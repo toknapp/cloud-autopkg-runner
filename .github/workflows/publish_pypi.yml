@@ -1,0 +1,36 @@
+name: Publish to PyPi
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - closed
+
+jobs:
+  publish-to-pypi:
+    name: Publish to PyPI
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    environment:
+      name: PyPi
+      url: https://pypi.org/p/cloud-autopkg-runner
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: Build
+        run: uv build
+      - name: Publish
+        run: uv publish --trusted-publishing always
+
+  install-library-from-pypi:
+    name: Install from PyPI
+    needs: [publish-to-pypi]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - name: Install
+        run: uv run --with cloud-autopkg-runner --no-project -- python -c "import cloud_autopkg_runner"
