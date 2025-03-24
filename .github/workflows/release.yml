@@ -26,7 +26,7 @@ jobs:
 
   install-library-from-testpypi:
     name: Install from TestPyPI
-    needs: [TestPyPi]
+    needs: [publish-to-testpypi]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -53,7 +53,7 @@ jobs:
   install-library-from-pypi:
     name: Install from PyPI
     if: startsWith(github.ref, 'refs/tags/v')
-    needs: [PyPi]
+    needs: [publish-to-pypi]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
