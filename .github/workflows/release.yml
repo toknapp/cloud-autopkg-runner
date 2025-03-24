@@ -17,17 +17,29 @@ jobs:
       - name: Install the project
         run: uv sync
       - name: Bump Version
+        id: bump-version-minor
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          VERSION=$(uv run hatch version)
+          echo "VERSION=$(uv run hatch version)" >> $GITHUB_OUTPUT
           uv run hatch version minor
-          NEW_VERSION=$(uv run hatch version)
-          git add src/cloud_autopkg_runner/__about__.py
-          git commit -m "Bump version: ${VERSION} → ${NEW_VERSION}"
-          git tag ${VERSION}
-          git push
-          git push --tags
+          echo "NEW_VERSION=$(uv run hatch version)" >> $GITHUB_OUTPUT
+      - name: "Import GPG key"
+        id: import-gpg
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+      - name: Commit all changed files back to the repository
+        id: commit-def
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+          commit_user_name: ${{ steps.import-gpg.outputs.name }}
+          commit_user_email: ${{ steps.import-gpg.outputs.email }}
+          commit_message: "[auto] Bump version: ${{ steps.bump-version-minor.outputs.VERSION }} → ${{ steps.bump-version-minor.outputs.NEW_VERSION }}"
+          file_pattern: src/cloud_autopkg_runner/__about__.py
+          tagging_message: ${{ steps.bump-version-minor.outputs.NEW_VERSION }}
 
   publish-to-testpypi:
     name: Publish to TestPyPI
@@ -68,17 +80,29 @@ jobs:
       - name: Install the project
         run: uv sync
       - name: Bump Version
+        id: bump-version-release
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          VERSION=$(uv run hatch version)
+          echo "VERSION=$(uv run hatch version)" >> $GITHUB_OUTPUT
           uv run hatch version release
-          NEW_VERSION=$(uv run hatch version)
-          git add src/cloud_autopkg_runner/__about__.py
-          git commit -m "Bump version: ${VERSION} → ${NEW_VERSION}"
-          git tag ${VERSION}
-          git push
-          git push --tags
+          echo "NEW_VERSION=$(uv run hatch version)" >> $GITHUB_OUTPUT
+      - name: "Import GPG key"
+        id: import-gpg
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+      - name: Commit all changed files back to the repository
+        id: commit-def
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_author: "github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+          commit_user_name: ${{ steps.import-gpg.outputs.name }}
+          commit_user_email: ${{ steps.import-gpg.outputs.email }}
+          commit_message: "[auto] Bump version: ${{ steps.bump-version-release.outputs.VERSION }} → ${{ steps.bump-version-release.outputs.NEW_VERSION }}"
+          file_pattern: src/cloud_autopkg_runner/__about__.py
+          tagging_message: ${{ steps.bump-version-release.outputs.NEW_VERSION }}
 
   publish-to-pypi:
     name: Publish to PyPI
