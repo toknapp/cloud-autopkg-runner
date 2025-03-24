@@ -1,16 +1,14 @@
 name: Publish to PyPi
 
 on:
-  pull_request:
-    branches:
-      - main
-    types:
-      - closed
+  push:
+    tags:
+      - '*'
 
 jobs:
   publish-to-pypi:
     name: Publish to PyPI
-    if: github.event.pull_request.merged == true
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment:
       name: PyPi
