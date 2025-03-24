@@ -102,7 +102,7 @@ def parse_arguments() -> Namespace:
     )
     parser.add_argument(
         "--cache-file",
-        default="AutoPkg/metadata_cache.json",
+        default="metadata_cache.json",
         help="Path to the file that stores the download metadata cache.",
         type=Path,
     )
