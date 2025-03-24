@@ -20,9 +20,9 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          VERSION=$(uvx hatch version)
-          hatch version minor
-          NEW_VERSION=$(uvx hatch version)
+          VERSION=$(uv run hatch version)
+          uv run hatch version minor
+          NEW_VERSION=$(uv run hatch version)
           git add src/cloud_autopkg_runner/__about__.py
           git commit -m "Bump version: ${VERSION} → ${NEW_VERSION}"
           git tag ${VERSION}
@@ -71,9 +71,9 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          VERSION=$(uvx hatch version)
-          hatch version release
-          NEW_VERSION=$(uvx hatch version)
+          VERSION=$(uv run hatch version)
+          uv run hatch version release
+          NEW_VERSION=$(uv run hatch version)
           git add src/cloud_autopkg_runner/__about__.py
           git commit -m "Bump version: ${VERSION} → ${NEW_VERSION}"
           git tag ${VERSION}
