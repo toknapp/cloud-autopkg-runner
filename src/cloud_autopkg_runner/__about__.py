@@ -6,4 +6,4 @@ information can be accessed programmatically to determine the
 installed version of the library.
 """
 
-__version__ = "0.5.3"
+__version__ = "0.5.4"
