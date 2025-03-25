@@ -30,6 +30,12 @@ This library provides modules for:
 * Python 3.10 or higher
 * [AutoPkg](https://github.com/autopkg/autopkg) installed and configured
 
+### Installing with uv
+
+```bash
+uv add cloud-autopkg-runer
+```
+
 ### Installing from PyPI
 
 ```bash
@@ -40,18 +46,18 @@ pip install cloud-autopkg-runner
 
 ### Command Line
 
-The cloud-autopkg-runner library provides a command-line interface (CLI) for running AutoPkg recipes.
+The cloud-autopkg-runner library provides a command-line interface (CLI) for running AutoPkg recipes. UV is recommended (`uv run autopkg-run`), but you can also call it as a python module (`python -m cloud_autopkg_runner`).
 
 ### Running a Recipe
 
 ```bash
-autopkg-run --recipe Firefox.pkg.recipe
+uv run autopkg-run --recipe Firefox.pkg.recipe
 ```
 
 ### Running Multiple Recipes
 
 ```bash
-autopkg-run --recipe Firefox.pkg.recipe --recipe GoogleChrome.pkg.recipe
+uv run autopkg-run --recipe Firefox.pkg.recipe --recipe GoogleChrome.pkg.recipe
 ```
 
 ### Specifying a Recipe List from a JSON File
@@ -59,13 +65,16 @@ autopkg-run --recipe Firefox.pkg.recipe --recipe GoogleChrome.pkg.recipe
 Create a JSON file (`recipes.json`) containing a list of recipe names:
 
 ```json
-["Firefox.pkg.recipe", "GoogleChrome.pkg.recipe"]
+[
+    "Firefox.pkg.recipe",
+    "GoogleChrome.pkg.recipe"
+]
 ```
 
 Then, run the recipes using the `--recipe-list` option:
 
 ```bash
-autopkg-run --recipe-list recipes.json
+uv run autopkg-run --recipe-list recipes.json
 ```
 
 ### Setting the Verbosity Level
@@ -73,7 +82,7 @@ autopkg-run --recipe-list recipes.json
 Use the `-v` option to control the verbosity level. You can specify it multiple times for increased verbosity (e.g., `-vvv`).
 
 ```bash
-autopkg-run -vv --recipe Firefox.pkg.recipe
+uv run autopkg-run -vv --recipe Firefox.pkg.recipe
 ```
 
 ### Specifying a Log File
@@ -81,7 +90,7 @@ autopkg-run -vv --recipe Firefox.pkg.recipe
 Use the `--log-file` option to specify a log file for the script's output:
 
 ```bash
-autopkg-run --log-file autopkg_runner.log --recipe Firefox.pkg.recipe
+uv run autopkg-run --log-file autopkg_runner.log --recipe Firefox.pkg.recipe
 ```
 
 ### As a Python Library

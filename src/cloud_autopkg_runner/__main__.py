@@ -134,6 +134,8 @@ async def process_recipe_list(
         (Exceptions raised within `run_recipe` are caught and logged as warnings.
         Exceptions during `Recipe` object creation are not explicitly handled.)
     """
+    logger.debug("Processing recipes...")
+
     recipes: list[Recipe] = []
     for recipe_name in recipe_list:
         for overrides_path in overrides_paths:
