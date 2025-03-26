@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Identifier</key>
+	<string>local.munki.Doctave</string>
+	<key>Input</key>
+	<dict>
+		<key>MUNKI_REPO_SUBDIR</key>
+		<string>apps/%NAME%</string>
+		<key>NAME</key>
+		<string>Doctave</string>
+		<key>pkginfo</key>
+		<dict>
+			<key>catalogs</key>
+			<array>
+				<string>testing</string>
+			</array>
+			<key>category</key>
+			<string>Developer Tools</string>
+			<key>description</key>
+			<string>Doctave desktop client</string>
+			<key>developer</key>
+			<string>Doctave Oy</string>
+			<key>display_name</key>
+			<string>Doctave</string>
+			<key>items_to_copy</key>
+			<array>
+				<dict>
+					<key>destination_path</key>
+					<string>/Applications</string>
+					<key>mode</key>
+					<string>g+w</string>
+					<key>source_item</key>
+					<string>Doctave.app</string>
+				</dict>
+			</array>
+			<key>name</key>
+			<string>%NAME%</string>
+			<key>unattended_install</key>
+			<true/>
+		</dict>
+	</dict>
+	<key>ParentRecipe</key>
+	<string>com.github.securitgeneration.munki.Doctave</string>
+	<key>ParentRecipeTrustInfo</key>
+	<dict>
+		<key>non_core_processors</key>
+		<dict/>
+		<key>parent_recipes</key>
+		<dict>
+			<key>com.github.securitgeneration.download.Doctave</key>
+			<dict>
+				<key>git_hash</key>
+				<string>7142fc4ed977e06c859295aefed40224ae3123b5</string>
+				<key>path</key>
+				<string>~/Library/AutoPkg/RecipeRepos/com.github.securitygeneration.autopkg-recipes/Doctave/Doctave.download.recipe</string>
+				<key>sha256_hash</key>
+				<string>d92b9b32713549ac98f5dddb9a496ec8caf268b2af40e0ebc023dabb690229b9</string>
+			</dict>
+			<key>com.github.securitgeneration.munki.Doctave</key>
+			<dict>
+				<key>git_hash</key>
+				<string>7142fc4ed977e06c859295aefed40224ae3123b5</string>
+				<key>path</key>
+				<string>~/Library/AutoPkg/RecipeRepos/com.github.securitygeneration.autopkg-recipes/Doctave/Doctave.munki.recipe</string>
+				<key>sha256_hash</key>
+				<string>831d56e2f236d9905d5a3818247bd9e9e567532e0af7a518c44bd2e00b742283</string>
+			</dict>
+		</dict>
+	</dict>
+</dict>
+</plist>
