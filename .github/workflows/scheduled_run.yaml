@@ -26,7 +26,7 @@ jobs:
           key: cache-${{ hashFiles('uv.lock') }}
 
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@22695119d769bdb6f7032ad67b9bca0ef8c4a174
         with:
           version: "latest"
           enable-cache: true
